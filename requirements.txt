@@ -1,0 +1,6 @@
+azure-ai-formrecognizer
+pypdf2 
+reportlab 
+streamlit 
+openai 
+python-dotenv
