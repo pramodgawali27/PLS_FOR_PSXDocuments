@@ -20,7 +20,7 @@ if uploaded_file is not None:
         f.write(uploaded_file.read())
 
     # Extract structured text from the PDF
-    structured_text = "this is india" # extract_text_and_structure_from_pdf("uploaded_document.pdf")
+    structured_text = extract_text_and_structure_from_pdf("uploaded_document.pdf")
     
     st.write("Extracted Document Structure and Text:")
     for page in structured_text:
@@ -30,9 +30,10 @@ if uploaded_file is not None:
     summarized_sections = []
     for page_text in structured_text:
         with st.spinner(f"Summarizing Page..."):
-            summary = generate_section_summary(page_text)
-            summarized_sections.append(summary)
-            st.write(summary)
+            print(f"{page_text}\n")
+            #summary = generate_section_summary(page_text)
+            #summarized_sections.append(summary)
+            #st.write(summary)
 
     # Button to generate the summarized PDF
     if st.button("Generate Summarized PDF"):
