@@ -1,7 +1,7 @@
 # app.py
 import streamlit as st
 from extract_document import extract_text_and_structure_from_pdf
-from text_summarization import generate_section_summary
+from text_summarization import generate_section_summary, has_more_than_10_words
 from reportlab.pdfgen import canvas
 from io import BytesIO
 
@@ -22,18 +22,23 @@ if uploaded_file is not None:
     # Extract structured text from the PDF
     structured_text = extract_text_and_structure_from_pdf("uploaded_document.pdf")
     
-    st.write("Extracted Document Structure and Text:")
+    st.write("---------------**Extracted Document Structure and Text**------:")
     for page in structured_text:
         st.write(page)
 
     # Summarize each page or section
+    st.write("------------**Plain Language Summary**--------------")
     summarized_sections = []
     for page_text in structured_text:
         with st.spinner(f"Summarizing Page..."):
-            print(f"{page_text}\n")
-            #summary = generate_section_summary(page_text)
-            #summarized_sections.append(summary)
-            #st.write(summary)
+            #print(f"{page_text}\n")
+            if has_more_than_10_words(page_text):
+               st.write(f"**Orginal Text** :-- {page_text}")
+               
+               summary = generate_section_summary(page_text)
+               st.write(f"**Plain Language Summary** :-- {summary}")
+               summarized_sections.append(summary)
+               st.write(summary)
 
     # Button to generate the summarized PDF
     if st.button("Generate Summarized PDF"):
@@ -53,3 +58,5 @@ if uploaded_file is not None:
             file_name="summarized_document.pdf",
             mime="application/pdf"
         )
+
+

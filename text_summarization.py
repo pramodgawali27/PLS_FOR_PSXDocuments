@@ -18,13 +18,15 @@ def generate_section_summary(section_text):
     :param section_text: The text of a section of the document.
     :return: The summary of the section.
     """
+    prompt="""Generate Plain Language Summary
+           """
     try:
         response = client.chat.completions.create(
          model=chat_model_id,
          messages= [
          {
             "role": "system",
-             "content": f"Summarize this section in plain language: {section_text}"
+             "content": f"{prompt}: {section_text}"
          }
         ],
         max_tokens=800,
@@ -40,3 +42,15 @@ def generate_section_summary(section_text):
         return response.choices[0].message.content
     except Exception as e:
         return f"Error generating summary: {str(e)}"
+
+
+
+def has_more_than_10_words(text):
+    # Split the text into words using whitespace
+    words = text.split()
+    
+    # Check if the number of words is greater than 10
+    if len(words) > 10:
+        return True
+    else:
+        return False

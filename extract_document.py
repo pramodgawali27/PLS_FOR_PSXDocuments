@@ -28,11 +28,11 @@ def extract_text_and_structure_from_pdf(pdf_file_path):
         result = poller.result()
 
     structured_text = []
-    for page in result.pages:
-        page_text = f"Page {page.page_number}:\n"
-        for line in page.lines:
-            page_text += f"{line.content}\n"
-        structured_text.append(page_text)
+    for page in result.paragraphs:
+        page_text = f"Page 1:\n"
+        #for line in page.spans:
+        #    page_text += f"{line.}\n"
+        structured_text.append(page.content)
 
     return structured_text
 
