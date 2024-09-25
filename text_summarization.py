@@ -7,17 +7,20 @@ from dotenv import load_dotenv
 load_dotenv()
 client = AzureOpenAI(
     azure_endpoint = "https://plstest.openai.azure.com/",
-    api_key = "ac4ac1867bcc48779a4e5cbaa16b5f9c",
+    api_key = "<api key>",
     api_version = "2024-05-01-preview",
 )
 chat_model_id = "PLSTest"
-def generate_section_summary(section_text):
+def generate_section_summary(section_text,security_input):
     """
     Sends a section of the document text to OpenAI API to generate a plain language summary.
     
     :param section_text: The text of a section of the document.
     :return: The summary of the section.
     """
+    print(client.api_key)
+    client.api_key=security_input
+    print(client.api_key)
     prompt="""Generate Plain Language Summary
            """
     try:

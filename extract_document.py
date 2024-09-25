@@ -11,7 +11,7 @@ load_dotenv()
 AZURE_FORM_RECOGNIZER_ENDPOINT = os.getenv("AZURE_FORM_RECOGNIZER_ENDPOINT")
 AZURE_FORM_RECOGNIZER_KEY = os.getenv("AZURE_FORM_RECOGNIZER_KEY")
 
-def extract_text_and_structure_from_pdf(pdf_file_path):
+def extract_text_and_structure_from_pdf(pdf_file_path,formApiKey):
     """
     Uses Azure Form Recognizer to extract structured text from a PDF document.
 
@@ -20,7 +20,7 @@ def extract_text_and_structure_from_pdf(pdf_file_path):
     """
     client = DocumentAnalysisClient(
         endpoint=AZURE_FORM_RECOGNIZER_ENDPOINT,
-        credential=AzureKeyCredential(AZURE_FORM_RECOGNIZER_KEY)
+        credential=AzureKeyCredential(formApiKey)
     )
 
     with open(pdf_file_path, "rb") as f:

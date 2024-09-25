@@ -10,6 +10,8 @@ st.set_page_config(page_title="Structured PDF Summarizer", page_icon="📄", lay
 
 # Title of the web app
 st.title("📄 PDF Summarizer with Structure")
+azure_input = st.text_input("Enter your azure openAI API key", type="password")
+form_input = st.text_input("Enter your form recognozer API key", type="password")
 
 # File uploader for PDFs
 uploaded_file = st.file_uploader("Upload your PDF for summarization", type=['pdf'])
@@ -20,7 +22,7 @@ if uploaded_file is not None:
         f.write(uploaded_file.read())
 
     # Extract structured text from the PDF
-    structured_text = extract_text_and_structure_from_pdf("uploaded_document.pdf")
+    structured_text = extract_text_and_structure_from_pdf("uploaded_document.pdf",form_input)
     
     st.write("---------------**Extracted Document Structure and Text**------:")
     for page in structured_text:
@@ -35,7 +37,7 @@ if uploaded_file is not None:
             if has_more_than_10_words(page_text):
                st.write(f"**Orginal Text** :-- {page_text}")
                
-               summary = generate_section_summary(page_text)
+               summary = generate_section_summary(page_text,azure_input)
                st.write(f"**Plain Language Summary** :-- {summary}")
                summarized_sections.append(summary)
                st.write(summary)
